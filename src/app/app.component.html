@@ -1,6 +1,9 @@
-<h1 class="text-3xl font-bold underline">
-  Hello world!
-</h1>
-<button class="btn">Default</button>
+<div>
+  <h2>Job Application for Heroes</h2>
+  <app-dynamic-form [questions]="(questions$ | async) ?? []" (payload)="submit($event)" />
+</div>
+@if (payload) {
+  <div class="form-row"><strong>Saved the following values</strong><br />{{ (payload | json) }}</div>
+}
 
 <router-outlet />

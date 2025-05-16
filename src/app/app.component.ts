@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DynamicFormComponent } from "./components/pure/dynamic-form/dynamic-form.component";
+import { DynamicFormComponent } from "./components/container/dynamic-form/dynamic-form.component";
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import QuestionBase from './models/question-base';

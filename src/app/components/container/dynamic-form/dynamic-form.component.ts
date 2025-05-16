@@ -2,7 +2,7 @@ import { Component, effect, inject, input, output } from '@angular/core';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import QuestionBase from '../../../models/question-base';
 import { QuestionControlService } from '../../../services/question-control.service';
-import { DynamicFormQuestionComponent } from '../dynamic-form-question/dynamic-form-question.component';
+import { DynamicFormQuestionComponent } from '../../pure/dynamic-form-question/dynamic-form-question.component';
 
 @Component({
   selector: 'app-dynamic-form',

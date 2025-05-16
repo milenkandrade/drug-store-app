@@ -42,7 +42,7 @@ export const CategoriesReducer = createReducer(
     (state, { errorAPICategories }) => ({ ...state, errorAPICategories, isLoadingBrands: false })),
 )
 
-export const alertsFeature = createFeature({
+export const categoriesFeature = createFeature({
   name: alertsFeatureKey,
   reducer: CategoriesReducer,
 })
@@ -54,4 +54,4 @@ export const {
   selectCategoriesState,
   selectErrorAPICategories,
   selectIsLoadingCategories,
-} = alertsFeature
+} = categoriesFeature

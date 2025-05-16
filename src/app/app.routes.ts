@@ -4,21 +4,28 @@ import { EntriesPageComponent } from './pages/entries-page/entries-page.componen
 import { AlertsPageComponent } from './pages/alerts-page/alerts-page.component';
 import { InventoryPageComponent } from './pages/inventory-page/inventory-page.component';
 import { SalesPageComponent } from './pages/sales-page/sales-page.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 
 export const routes: Routes = [
   {
-    path:'dashboard', component:DashboardPageComponent
+    path: '', component: HomePageComponent
   },
   {
-    path:'entries', component:EntriesPageComponent
+    path:'dashboard', component: DashboardPageComponent
   },
   {
-    path:'alerts', component:AlertsPageComponent
+    path:'entries', component: EntriesPageComponent
   },
   {
-    path:'inventory', component:InventoryPageComponent
+    path:'alerts', component: AlertsPageComponent
   },
   {
-    path:'sales', component:SalesPageComponent
+    path:'inventory', component: InventoryPageComponent
+  },
+  {
+    path:'sales', component: SalesPageComponent
+  },
+  {
+    path: "**", redirectTo: '/'
   }
 ];

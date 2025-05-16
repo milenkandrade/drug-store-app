@@ -4,9 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-entries-page',
   imports: [],
   template: `
-    <p>
+    <div class="page" >
       entries-page works!
-    </p>
+    </div>
   `,
   styles: ''
 })

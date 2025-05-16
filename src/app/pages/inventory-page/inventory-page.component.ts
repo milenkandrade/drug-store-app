@@ -4,9 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-inventory-page',
   imports: [],
   template: `
-    <p>
+    <div class="page" >
       inventory-page works!
-    </p>
+    </div>
   `,
   styles: ``
 })

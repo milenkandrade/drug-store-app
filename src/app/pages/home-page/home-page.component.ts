@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-sales-page',
+  selector: 'app-home-page',
   imports: [],
   template: `
     <div class="page" >
-      sales-page works!
+      home-page works!
     </div>
   `,
   styles: ``
 })
-export class SalesPageComponent {
+export class HomePageComponent {
 
 }

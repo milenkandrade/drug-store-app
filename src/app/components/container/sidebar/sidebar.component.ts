@@ -4,9 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-sidebar',
   imports: [],
   template: `
-    <p>
+    <div class="sidebar" >
       sidebar works!
-    </p>
+    </div>
   `,
   styles: ``
 })

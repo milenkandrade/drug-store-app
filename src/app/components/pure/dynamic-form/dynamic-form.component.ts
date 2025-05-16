@@ -29,37 +29,20 @@ import { DynamicFormQuestionComponent } from '../dynamic-form-question/dynamic-f
 export class DynamicFormComponent {
 
   private readonly qcs = inject(QuestionControlService);
-
   questions = input<QuestionBase<any>[]>([]);
-  form = new FormGroup({});
-
-  initialized = false
   payload = output<any>({});
-
-
-  // constructor(){
-  //   effect(()=>{
-  //     this.form = this.qcs.toFormGroup(this.questions() as QuestionBase<string>[]);
-
-  //   })
-  // }
+  form = new FormGroup({});
+  initialized = false
 
   constructor() {
     effect(() => {
       const currentQuestions = this.questions();
       if (!currentQuestions || currentQuestions.length === 0) return;
-
-
       this.form = this.qcs.toFormGroup(currentQuestions);
-
-
-
     });
   }
 
   onSubmit(){
-    console.log('form: ',this.form.getRawValue());
-
     this.payload.emit(this.form.getRawValue());
   }
 

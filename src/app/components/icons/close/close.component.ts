@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'icon-add',
+  selector: 'icon-close',
   imports: [],
   template: `
     <svg xmlns="http://www.w3.org/2000/svg"
       viewBox="0 -960 960 960" class="size-4" fill="currentColor" >
-      <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/>
+      <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
     </svg>
   `,
   styles: ``
 })
-export class AddComponent {
+export class CloseComponent {
 
 }

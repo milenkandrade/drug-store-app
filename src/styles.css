@@ -11,7 +11,7 @@
   --color-base-200: oklch(98% 0 0);
   --color-base-300: oklch(95% 0 0);
   --color-base-content: oklch(21% 0.006 285.885);
-  --color-primary: oklch(45% 0.24 277.023);
+  --color-primary: oklch(48% 0.243 264.376);
   --color-primary-content: oklch(93% 0.034 272.788);
   --color-secondary: oklch(65% 0.241 354.308);
   --color-secondary-content: oklch(94% 0.028 342.258);
@@ -38,8 +38,11 @@
 }
 
 .page {
+  transition: all 300ms ease-in-out;
   display: flex;
   width: 100%;
-  max-width: 85rem;
+  max-width: 73.75rem;
   background-color: blueviolet;
+  height: 100dvh;
+  overflow-y: hidden;
 }

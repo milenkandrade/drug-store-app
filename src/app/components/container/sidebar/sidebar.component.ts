@@ -19,7 +19,7 @@ import { RouterLink } from '@angular/router';
     RouterLink
 ],
   template: `
-    @if(isOpen() && isMobile()) {
+    @if(isMobile() && isOpen()) {
       <div class="fixed inset-0 z-10 bg-black/50 opacity-50 max-w-360 mx-auto "
         (click)="changeIsOpen()" >
       </div>

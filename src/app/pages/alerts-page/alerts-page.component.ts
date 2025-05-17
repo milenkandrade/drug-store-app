@@ -4,9 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-alerts-page',
   imports: [],
   template: `
-    <p>
+    <div class="page">
       alerts-page works!
-    </p>
+    </div>
   `,
   styles: ``
 })

@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-sidebar',
   imports: [],
   template: `
-    <div class="sidebar" >
+    <div class="w-full max-w-60 flex " >
       sidebar works!
     </div>
   `,

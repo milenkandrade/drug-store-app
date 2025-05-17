@@ -37,14 +37,9 @@
   --noise: 0;
 }
 
-.layout {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-template-rows: 1fr;
-  gap: 0px 0px;
-  grid-template-areas:
-    "sidebar page";
+.page {
+  display: flex;
+  width: 100%;
+  max-width: 85rem;
+  background-color: blueviolet;
 }
-
-.sidebar { grid-area: sidebar; }
-.page { grid-area: page; }

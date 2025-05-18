@@ -48,9 +48,3 @@
   overflow-y: hidden;
   justify-self: center;
 }
-
-@media only screen and (max-width: 1024px) {
-  .page {
-    width: 95dvw;
-  }
-}

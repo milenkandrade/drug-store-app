@@ -21,7 +21,7 @@ export class PageButtonComponent {
   selector: 'app-pagination',
   imports: [PageButtonComponent],
   template: `
-    @if(totalPages > 1) {
+    @if(totalPages > 0 && actualPage > 0) {
       <div class="join" role="navigation" aria-label="Pagination">
         <!-- Button to First Page-->
         <button class="join-item btn active:btn-primary"

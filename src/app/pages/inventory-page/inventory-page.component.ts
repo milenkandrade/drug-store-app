@@ -1,46 +1,67 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { DynamicTableComponent } from "../../components/container/dynamic-table/dynamic-table.component";
 import DataHead from '../../models/data-head';
-import Person from '../../models/person';
 import { DataTable } from '../../models/data-table';
+import { RouterService } from '../../services/router.service';
+import { AsyncPipe, JsonPipe, } from '@angular/common';
+import { map } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { load, selectProducts, selectSelectedPageable } from '../../store/product/product.state';
+import Product from '../../models/product';
 
 @Component({
   selector: 'app-inventory-page',
-  imports: [DynamicTableComponent],
+  imports: [AsyncPipe, DynamicTableComponent],
   template: `
     <div class="page flex flex-col" >
       <h1 class="pb-5" >Inventory Management</h1>
       <app-dynamic-table
-        [dataForm]="dataForm"
-        [actualPage]="actualPage()"
-        [totalPages]="20"
+        [dataForm]="dataForm((products | async)?.content || [])"
+        [actualPage]="((actualParams | async) || 1)"
+        [totalPages]="(products | async)?.totalPages || 1"
         [elementsType]="'Products'"
-        [lengthTotalData]="dataForm.data.length"
-        [numberOfRows]="5"
+        [lengthTotalData]="(products | async)?.totalElements || 0"
+        [numberOfRows]="(products | async)?.size || 0"
         (futurePage)="setFuturePage($event)"
       />
-      <p> Actual page: {{ actualPage() }}</p>
     </div>
   `,
   styles: ``
 })
-export class InventoryPageComponent {
+export class InventoryPageComponent implements OnInit {
   head: DataHead[] = [
     /* { name: '', type:'select', key: '' }, */
-    { name: 'Name', type: 'text', key: 'name' },
-    { name: 'Job', type: 'text', key: 'job' },
-    { name: 'Favorite Color', type: 'text', key: 'favoriteColor' },
+    { name: 'Register N°', type: 'text', key: 'health_registration_number' },
+    { name: 'Product Name', type: 'text', key: 'product_name' },
+    { name: 'Cost Price', type: 'text', key: 'cost_price' },
+    { name: 'Sale Price', type: 'text', key: 'sale_price' },
+    { name: 'Admision Date', type: 'text', key: 'admision_date' },
+    { name: 'Expiration Date', type: 'text', key: 'expiration_date' },
+    { name: 'Supplier Name', type: 'text', key: 'supplier_name' },
+    { name: 'Require', type: 'text', key: 'require' },
     { name: 'Actions', type: 'actions', key: '' }
   ]
-  data: Person[] = [
-    { name: 'Cy Ganderton', job: 'Quality Control Specialist', favoriteColor: 'Blue' },
-    { name: 'Hart Hagerty', job: 'Desktop Support Technician', favoriteColor: 'Purple' },
-    { name: 'Brice Swyre', job: 'Tax Accountant', favoriteColor: 'Red' },
-  ]
-  dataForm = new DataTable<Person>({ head: this.head, data: this.data })
-  actualPage = signal(1)
+
+  routerService = inject(RouterService)
+  actualParams = this.routerService.actualParams
+    .pipe(map(p => Number(p?.['id']) || 1 ))
+
+  store = inject(Store)
+  products = this.store.select(selectProducts)
+  selectPageable = this.store.select(selectSelectedPageable)
+  dataForm = (data: Product[]) => new DataTable<Product>({ head: this.head, data })
 
   setFuturePage(page: number) {
-    this.actualPage.set(page)
+    this.routerService.navigateTo([`/inventory/${page}`])
   }
+
+
+  constructor() {
+
+  }
+
+  ngOnInit() {
+    this.store.dispatch(load())
+  }
+
 }

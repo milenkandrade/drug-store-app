@@ -5,6 +5,7 @@ export default interface Invoice {
   invoice_identifier: string,
   client_registration_number: string,
   suplier_registration_number: string,
+  supplier_name: UUID,
   client_id: UUID,
   supplier_id: UUID,
   incidencias: UUID[],

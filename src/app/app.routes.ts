@@ -20,7 +20,7 @@ export const routes: Routes = [
     path:'alerts', component: AlertsPageComponent
   },
   {
-    path:'inventory', component: InventoryPageComponent
+    path:'inventory/:id', component: InventoryPageComponent
   },
   {
     path:'sales', component: SalesPageComponent

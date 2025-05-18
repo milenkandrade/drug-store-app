@@ -1,9 +1,10 @@
 import { createActionGroup, createFeature, createReducer, emptyProps, on, props } from "@ngrx/store";
+import Category from "../../models/category";
 
 export const alertsFeatureKey = 'categories';
 
 interface State {
-  categories: string[],
+  categories: Category[],
   isLoadingCategories: boolean,
   errorAPICategories: string ,
 }
@@ -26,7 +27,7 @@ export const {load} = alertsPageActions;
 export const alertsAPIActions = createActionGroup({
   source: 'categories API',
   events: {
-    loadCategoriesSuccess: props<{ categories: string[] }>(),
+    loadCategoriesSuccess: props<{ categories: Category[] }>(),
     loadCategoriesFailure: props<{ errorAPICategories: string }>(),
   }
 })

@@ -59,7 +59,7 @@ export class SidebarComponent implements OnInit, OnChanges {
   icons = [
     { id: 1, name: 'Dashboard', image: HomeComponent, link: '/dashboard' },
     { id: 2, name: 'Entries', image: DocumentComponent, link: '/entries' },
-    { id: 3, name: 'Inventory', image: PackageComponent, link: '/inventory' },
+    { id: 3, name: 'Inventory', image: PackageComponent, link: '/inventory/1' },
     { id: 4, name: 'Sales', image: ChartComponent, link: '/sales' },
     { id: 5, name: 'Alerts', image: AlertComponent, link: '/alerts' },
   ]

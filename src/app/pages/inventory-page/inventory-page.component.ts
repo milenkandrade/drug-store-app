@@ -4,21 +4,25 @@ import DataHead from '../../models/data-head';
 import { DataTable } from '../../models/data-table';
 import { RouterService } from '../../services/router.service';
 import { AsyncPipe, } from '@angular/common';
-import { combineLatest, distinctUntilChanged, fromEvent, map, of, startWith, Subject, takeUntil, tap } from 'rxjs';
+import { combineLatest,map, Subject, takeUntil, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { load, selectProducts, selectSelectedPageable, setSelectedPageable } from '../../store/product/product.state';
 import Product from '../../models/product';
 import { PlatformService } from '../../services/platform.service';
 import { AddComponent } from "../../components/icons/add/add.component";
+import { SearchInputComponent } from "../../components/pure/search-input/search-input.component";
+import { FilterInputComponent } from "../../components/pure/filter-input/filter-input.component";
+import FilterTable from '../../models/filter-table';
+import { CalendarComponent } from "../../components/icons/calendar/calendar.component";
 
 @Component({
   selector: 'app-inventory-page',
-  imports: [AsyncPipe, DynamicTableComponent, AddComponent],
+  imports: [AsyncPipe, DynamicTableComponent, AddComponent, SearchInputComponent, FilterInputComponent, CalendarComponent],
   template: `
     <div class="page flex flex-col" >
-      <div class="flex flex-col md:flex-row justify-between pb-10 md:pb-0 " >
-        <div class="pb-5 flex flex-col" >
-          <h1 class=" text-3xl font-bold tracking-tight" >Inventory Management</h1>
+      <div class="flex flex-col md:flex-row justify-between pb-10 md:pb-0 gap-5 " >
+        <div class="flex flex-col pb-5" >
+          <h1 class="text-3xl font-bold tracking-tight" >Inventory Management</h1>
           <p className="text-muted-foreground text-balance ">
             Manage your products, stock levels, and suppliers
           </p>
@@ -27,8 +31,11 @@ import { AddComponent } from "../../components/icons/add/add.component";
           <icon-add /><span>Add Product</span>
         </div>
       </div>
-      <div>
-
+      <div class="flex flex-col md:flex-row w-full pb-10 gap-5 " >
+        <app-search-input class="grow" />
+        <app-filter-input [options]="filtersA" class="grow" />
+        <app-filter-input [options]="filtersB" class="grow" />
+        <div class="btn active:btn-primary" ><icon-calendar /></div>
       </div>
       <app-dynamic-table
         [dataForm]="dataForm((products | async)?.content || [])"
@@ -66,6 +73,18 @@ export class InventoryPageComponent implements OnInit,OnDestroy {
   products = this.store.select(selectProducts)
   selectPageable = this.store.select(selectSelectedPageable)
   dataForm = (data: Product[]) => new DataTable<Product>({ head: this.head, data })
+  filtersA: FilterTable[] = [
+    { name: 'Filter', key: '' },
+    { name: 'All types', key: '' },
+    { name: 'Over the counter', key: '' },
+    { name: 'Prescription', key: '' },
+  ]
+  filtersB: FilterTable[] = [
+    { name: 'Supplier', key: '' },
+    { name: 'Company A', key: '' },
+    { name: 'Company B', key: '' },
+    { name: 'Company C', key: '' },
+  ]
 
   setFuturePage(page: number) {
     this.routerService.navigateTo([`/inventory/${page}`])

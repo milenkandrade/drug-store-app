@@ -8,7 +8,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 
 export const routes: Routes = [
   {
-    path: '', component: HomePageComponent
+    path: '', redirectTo: '/inventory/1', pathMatch: 'full'
   },
   {
     path:'dashboard', component: DashboardPageComponent

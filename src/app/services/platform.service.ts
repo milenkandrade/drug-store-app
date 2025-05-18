@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, distinctUntilChanged, fromEvent, map, startWith, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, fromEvent, map, shareReplay, startWith, Subject, takeUntil, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +11,18 @@ export class PlatformService implements OnDestroy {
   private mobileBreakpoint = 1024;
   private isMobileSubject = new BehaviorSubject<boolean>(false);
 
-  isMobile$ = this.isMobileSubject.asObservable();
+  isMobile$ = this.isMobileSubject.pipe(takeUntil(this.destroy$), shareReplay(1));
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    if (this.isBrowser()) {
+    if(this.isBrowser()) {
       this.updateIsMobile();
-
       fromEvent(window, 'resize').pipe(
+        takeUntil(this.destroy$),
         startWith(null),
         map(() => this.checkIsMobile()),
         distinctUntilChanged(),
-        takeUntil(this.destroy$)
-      ).subscribe(this.isMobileSubject);
+        tap(v => this.isMobileSubject.next(v)),
+      ).subscribe();
     }
   }
 

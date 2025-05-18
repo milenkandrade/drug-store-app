@@ -4,12 +4,12 @@ import { DocumentComponent } from '../../icons/document/document.component';
 import { PackageComponent } from '../../icons/package/package.component';
 import { ChartComponent } from '../../icons/chart/chart.component';
 import { AlertComponent } from '../../icons/alert/alert.component';
-import { NgComponentOutlet } from '@angular/common';
+import { AsyncPipe, NgComponentOutlet } from '@angular/common';
 import { ClipboardComponent } from "../../icons/clipboard/clipboard.component";
 import { MenuComponent } from "../../icons/menu/menu.component";
 import { PlatformService } from '../../../services/platform.service';
 import { RouterLink } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { map, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
@@ -17,7 +17,8 @@ import { Subject, takeUntil } from 'rxjs';
     NgComponentOutlet,
     ClipboardComponent,
     MenuComponent,
-    RouterLink
+    RouterLink,
+    AsyncPipe
 ],
   template: `
     @if(isOpen()) {
@@ -40,11 +41,13 @@ import { Subject, takeUntil } from 'rxjs';
     @if(isOpen()) {
       <aside class="w-full flex-col border-r-1 h-full max-w-65 fixed z-20 pt-15
         border-neutral-content transition-transform duration-300 ease-in-out
-        {{ isOpen() && isMobile() ? 'fixed':'flex' }}  bg-base-100 " >
+        {{ isOpen() && (isMobile | async) ? 'fixed':'flex' }}  bg-base-100 " >
         <div class="flex flex-col pt-2 gap-2 pl-2 pr-2" >
           @for(icon of icons; track icon.id) {
             <a class="flex gap-2 btn-wide btn btn-ghost justify-normal
-              hover:btn-active btn-primary  " [routerLink]="icon.link" (click)="changeIsOpenAndMobile()"  >
+              hover:btn-active btn-primary  "
+                [routerLink]="icon.link"
+                (click)="changeIsOpenAndMobile()"  >
               @if(isOpen()) {
                 <ng-container *ngComponentOutlet="icon.image" />
                 <span>{{icon.name}}</span>
@@ -66,29 +69,26 @@ export class SidebarComponent implements OnInit, OnDestroy {
     { id: 5, name: 'Alerts', image: AlertComponent, link: '/alerts' },
   ]
   destroy = new Subject<void>()
-  isMobile = signal(false);
   isOpen = signal(false);
   platformService = inject(PlatformService);
+  isMobile = this.platformService.isMobile$
 
   changeIsOpen() {
     this.isOpen.set(!this.isOpen())
   }
 
   changeIsOpenAndMobile() {
-    if(this.isMobile() && this.isOpen()){
-      this.isOpen.set(false)
-    }
+    return this.isMobile.pipe(takeUntil(this.destroy),
+      map( v => v && this.isOpen() && this.isOpen.set(false)))
   }
 
   shouldOpenSidebar() {
-    return this.isOpen() && !this.isMobile()
+    return this.isMobile.pipe(takeUntil(this.destroy), map( v => !v && this.isOpen()))
   }
 
   ngOnInit(): void {
-    this.platformService.isMobile$
-    .pipe(takeUntil(this.destroy))
+    this.isMobile.pipe(takeUntil(this.destroy))
       .subscribe((isMobile: boolean) => {
-        this.isMobile.set(isMobile);
         if (!isMobile) {
           this.isOpen.set(true);
         } else {

@@ -21,25 +21,30 @@ import { map, Subject, takeUntil } from 'rxjs';
     AsyncPipe
 ],
   template: `
-    @if(isOpen() && (isMobile | async)) {
+    @if(isOpen()) {
       <div class="fixed inset-0 z-10 bg-black/50 opacity-50 max-w-360 mx-auto "
         (click)="changeIsOpen()" >
       </div>
     }
 
-    <div class="flex pt-2 py-2 pl-2 px-2 w-full {{ (isMobile | async) ? 'fixed z-20' : '' }} max-w-fit
+    <div class="flex pt-2 py-2 pl-2 px-2 w-full fixed z-20 max-w-65
       gap-1 {{ isOpen() ? 'border-b-1 border-r-1': ''  }} margin-1 border-neutral-content " >
       @if(isOpen()) {
         <div class="flex justify-center items-center btn btn-ghost ">
           <icon-clipboard class="text-primary " [classes]="'size-6'" />
           <span class="text-2xl" >PharmApp</span>
         </div>
+        <icon-menu class="btn p-3 ml-1 " (click)="changeIsOpen()" />
       }
+
+    </div>
+
+    <div class="fixed z-11 p-2" >
       <icon-menu class="btn p-3 ml-1 " (click)="changeIsOpen()" />
     </div>
 
     @if(isOpen()) {
-      <aside class="w-full flex-col border-r-1 h-full max-w-65 {{ (isMobile | async) ? 'fixed z-15' : '' }} pt-15
+      <aside class="w-full flex-col border-r-1 h-full max-w-65 fixed z-15 pt-15
         border-neutral-content transition-transform duration-300 ease-in-out
         {{ isOpen() && (isMobile | async) ? 'fixed':'flex' }}  bg-base-100 " >
         <div class="flex flex-col pt-2 gap-2 pl-2 pr-2" >

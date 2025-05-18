@@ -1,4 +1,4 @@
-import { Component, inject, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
+import { Component, inject, OnChanges, OnDestroy, OnInit, signal, SimpleChanges } from '@angular/core';
 import { HomeComponent } from '../../icons/home/home.component';
 import { DocumentComponent } from '../../icons/document/document.component';
 import { PackageComponent } from '../../icons/package/package.component';
@@ -43,7 +43,7 @@ import { RouterLink } from '@angular/router';
       <div class="flex flex-col pt-2 gap-2 pl-2 pr-2" >
         @for(icon of icons; track icon.id) {
           <a class="flex gap-2 btn-wide btn btn-ghost justify-normal
-            hover:btn-active btn-primary  " [routerLink]="icon.link" >
+            hover:btn-active btn-primary  " [routerLink]="icon.link" (click)="changeIsOpenAndMobile()"  >
             <ng-container *ngComponentOutlet="icon.image" />
             @if(isOpen()) {
               <span>{{icon.name}}</span>
@@ -55,7 +55,7 @@ import { RouterLink } from '@angular/router';
   `,
   styles: ``
 })
-export class SidebarComponent implements OnInit, OnChanges {
+export class SidebarComponent implements OnInit, OnDestroy {
   icons = [
     { id: 1, name: 'Dashboard', image: HomeComponent, link: '/dashboard' },
     { id: 2, name: 'Entries', image: DocumentComponent, link: '/entries' },
@@ -67,16 +67,18 @@ export class SidebarComponent implements OnInit, OnChanges {
   isOpen = signal(false);
   platformService = inject(PlatformService);
 
-  changeIsOpen(){
+  changeIsOpen() {
     this.isOpen.set(!this.isOpen())
   }
 
-  changeIsMobile() {
-    if(this.platformService.matchMediaQuery(1024)){
-      this.isMobile.set(true)
-    } else {
-      this.isMobile.set(false)
+  changeIsOpenAndMobile() {
+    if(this.isMobile() && this.isOpen()){
+      this.isOpen.set(false)
     }
+  }
+
+  changeIsMobile() {
+    this.isMobile.set(this.platformService.IsMobile())
   }
 
   shouldOpenSidebar() {
@@ -84,17 +86,18 @@ export class SidebarComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.changeIsMobile()
-    if(!this.isMobile()) {
-      this.isOpen.set(true)
-    }
     if(this.platformService.isBrowser) {
       window.addEventListener('resize', this.changeIsMobile.bind(this));
     }
+    if(!this.isMobile()) {
+      this.isOpen.set(true)
+    }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.changeIsMobile()
+  ngOnDestroy() {
+  if (this.platformService.isBrowser) {
+    window.removeEventListener('resize', this.changeIsMobile.bind(this));
   }
+}
 
 }

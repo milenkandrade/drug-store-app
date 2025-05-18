@@ -3,10 +3,11 @@ import { DataTable } from '../../../models/data-table';
 import { EditComponent } from "../../icons/edit/edit.component";
 import { DeleteComponent } from "../../icons/delete/delete.component";
 import { PaginationComponent } from "../../pure/pagination/pagination.component";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-dynamic-table',
-  imports: [EditComponent, DeleteComponent, PaginationComponent],
+  imports: [EditComponent, DeleteComponent, PaginationComponent, DatePipe],
   template: `
     <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
       <table class="table">
@@ -31,6 +32,9 @@ import { PaginationComponent } from "../../pure/pagination/pagination.component"
                   }
                   @case('text') {
                     <td key="$index" >{{ row[item.key] }}</td>
+                  }
+                  @case('date') {
+                    <td key="$index" >{{ row[item.key] | date }}</td>
                   }
                   @case('actions') {
                     <td>

@@ -12,7 +12,7 @@ export const loadCategories = createEffect(
     return actions$.pipe(
       ofType(load),
       exhaustMap(() =>
-        categoryService.getCategories({ page: 1 }).pipe(
+        categoryService.getCategories({ number: 1 }).pipe(
           map(categories => loadCategoriesSuccess({ categories })),
           catchError(error => of(loadCategoriesFailure({ errorAPICategories: error })))
         )

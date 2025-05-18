@@ -17,6 +17,14 @@ export class PlatformService {
   }
 
   public matchMediaQuery(n: number) {
-    return this.isBrowser && window.matchMedia(`(max-width: ${n}px)`).matches
+    return (this.isBrowser && window.matchMedia(`(max-width: ${n}px)`).matches)
+  }
+
+  IsMobile(): boolean {
+    if(this.matchMediaQuery(1024)){
+      return true
+    } else {
+      return false
+    }
   }
 }

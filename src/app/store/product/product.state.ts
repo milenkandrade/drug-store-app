@@ -20,7 +20,7 @@ const initialState: State = {
     size: 0,
     number: 0,
   },
-  selectedPageable: { size: 10, page: 1 },
+  selectedPageable: { size: 5, number: 1 },
   isLoadingProducts: false,
   errorAPIProducts: '',
 }
@@ -49,7 +49,7 @@ export const ProductsReducer = createReducer(
   initialState,
   on(load, (state) => ({ ...state, isLoadingProducts: true })),
   on(setSelectedPageable, (state, { pageable }) =>
-    ({ ...state, selectedPageable: { ...state.selectedPageable, pageable } })),
+    ({ ...state, selectedPageable: pageable })),
 
   on(loadProductsSuccess,
     (state, { products }) => ({ ...state, products, isLoadingBrands: false })),

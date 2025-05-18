@@ -18,7 +18,7 @@ export const categories: Category[] = [
 })
 export class CategoryService {
 
-  getCategories({ size = 10, page = 1 }: Pageable){
-    return of(createPage(categories, { size, page }).content);
+  getCategories({ size = 10, number = 1 }: Pageable){
+    return of(createPage<Category>(categories, { size, number }));
   }
 }

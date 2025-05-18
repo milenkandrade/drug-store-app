@@ -17,7 +17,7 @@ import { SidebarComponent } from "./components/container/sidebar/sidebar.compone
     @if (payload) {
       <div class="form-row"><strong>Saved the following values</strong><br />{{ (payload | json) }}</div>
     } -->
-  <div class="w-full h-full max-w-360 flex justify-self-center bg-base-100 mx-auto ">
+  <div class="w-full h-[100dvh] max-w-360 flex justify-self-center bg-base-100 mx-auto ">
     <app-sidebar />
     <router-outlet [hidden]="true" />
   </div>
@@ -30,7 +30,6 @@ export class AppComponent {
   payload: any = {};
 
   submit(values: any){
-    console.log('app: ',values);
     this.payload = values
 
   }

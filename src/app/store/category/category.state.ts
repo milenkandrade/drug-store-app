@@ -1,16 +1,23 @@
 import { createActionGroup, createFeature, createReducer, emptyProps, on, props } from "@ngrx/store";
 import Category from "../../models/category";
+import Page from "../../models/page";
 
 export const alertsFeatureKey = 'categories';
 
 interface State {
-  categories: Category[],
+  categories: Page<Category>,
   isLoadingCategories: boolean,
   errorAPICategories: string ,
 }
 
 const initialState: State = {
-  categories: [],
+  categories: {
+    content: [],
+    totalPages: 0,
+    totalElements: 0,
+    size: 0,
+    number: 0,
+  },
   isLoadingCategories: false,
   errorAPICategories: '',
 }
@@ -27,7 +34,7 @@ export const {load} = alertsPageActions;
 export const alertsAPIActions = createActionGroup({
   source: 'categories API',
   events: {
-    loadCategoriesSuccess: props<{ categories: Category[] }>(),
+    loadCategoriesSuccess: props<{ categories: Page<Category> }>(),
     loadCategoriesFailure: props<{ errorAPICategories: string }>(),
   }
 })

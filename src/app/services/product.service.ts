@@ -591,7 +591,7 @@ export const products: Product[] = [
 })
 export class ProductService {
 
-  getProducts({ size = 10, page = 1 }: Pageable){
-    return of(createPage(products, { size, page }));
+  getProducts({ size = 10, number = 1 }: Pageable){
+    return of(createPage<Product>(products, { size, number }));
   }
 }

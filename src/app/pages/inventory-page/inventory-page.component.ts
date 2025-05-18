@@ -31,11 +31,11 @@ import { CalendarComponent } from "../../components/icons/calendar/calendar.comp
           <icon-add /><span>Add Product</span>
         </div>
       </div>
-      <div class="flex flex-col md:flex-row w-full pb-10 gap-5 " >
-        <app-search-input class="grow" />
-        <app-filter-input [options]="filtersA" class="grow" />
-        <app-filter-input [options]="filtersB" class="grow" />
-        <div class="btn active:btn-primary" ><icon-calendar /></div>
+      <div class="flex flex-col md:flex-row pb-10 gap-5 " >
+        <app-search-input />
+        <app-filter-input [options]="filtersA" />
+        <app-filter-input [options]="filtersB" />
+        <div class="btn active:btn-primary shrink" ><icon-calendar /></div>
       </div>
       <app-dynamic-table
         [dataForm]="dataForm((products | async)?.content || [])"

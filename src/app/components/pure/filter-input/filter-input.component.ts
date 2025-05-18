@@ -6,7 +6,7 @@ import FilterTable from '../../../models/filter-table';
   selector: 'app-filter-input',
   imports: [FilterComponent],
   template: `
-    <select class="select">
+    <select class="select w-full md:w-60">
       <option selected disabled >
         <icon-filter /><span>{{ options[0].name }}</span>
       </option>

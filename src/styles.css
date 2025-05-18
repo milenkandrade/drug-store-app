@@ -39,11 +39,18 @@
 .page {
   transition: all 300ms ease-in-out;
   display: flex;
-  width: 95dvw;
+  width: 100%;
   max-width: 90rem;
   height: 100%;
   background-color: var(--color-base-100);
   padding: 2rem;
   padding-top: 5rem;
   overflow-y: hidden;
+  justify-self: center;
+}
+
+@media only screen and (max-width: 1024px) {
+  .page {
+    width: 95dvw;
+  }
 }

@@ -1,30 +1,45 @@
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject, distinctUntilChanged, fromEvent, map, startWith, Subject, takeUntil } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PlatformService {
+export class PlatformService implements OnDestroy {
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  private destroy$ = new Subject<void>();
+  private mobileBreakpoint = 1024;
+  private isMobileSubject = new BehaviorSubject<boolean>(false);
 
-  public get isBrowser() {
-    return isPlatformBrowser(this.platformId)
-  }
+  isMobile$ = this.isMobileSubject.asObservable();
 
-  public get isServer() {
-    return isPlatformServer(this.platformId)
-  }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (this.isBrowser()) {
+      this.updateIsMobile();
 
-  public matchMediaQuery(n: number) {
-    return (this.isBrowser && window.matchMedia(`(max-width: ${n}px)`).matches)
-  }
-
-  IsMobile(): boolean {
-    if(this.matchMediaQuery(1024)){
-      return true
-    } else {
-      return false
+      fromEvent(window, 'resize').pipe(
+        startWith(null),
+        map(() => this.checkIsMobile()),
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
+      ).subscribe(this.isMobileSubject);
     }
+  }
+
+  private checkIsMobile(): boolean {
+    return this.isBrowser() && window.matchMedia(`(max-width: ${this.mobileBreakpoint}px)`).matches;
+  }
+
+  private updateIsMobile(): void {
+    this.isMobileSubject.next(this.checkIsMobile());
+  }
+
+  public isBrowser(): boolean {
+    return isPlatformBrowser(this.platformId);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

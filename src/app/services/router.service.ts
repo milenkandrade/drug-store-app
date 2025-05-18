@@ -21,7 +21,7 @@ export class RouterService implements OnDestroy {
     private activeRoute: ActivatedRoute,
     private platformService: PlatformService,
   ) {
-    if(this.platformService.isBrowser) {
+    if(this.platformService.isBrowser()) {
       this.listenToRouterEvents()
     }
   }

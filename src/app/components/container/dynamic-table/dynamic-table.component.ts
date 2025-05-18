@@ -9,65 +9,68 @@ import { DatePipe } from '@angular/common';
   selector: 'app-dynamic-table',
   imports: [EditComponent, DeleteComponent, PaginationComponent, DatePipe],
   template: `
-    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-      <table class="table">
-        <!-- head -->
-        <thead>
-          <tr>
-            @for(perHead of dataForm?.head; track $index) {
-              <th>{{perHead.name}}</th>
-            }
-          </tr>
-        </thead>
-        <!-- body -->
-        <tbody >
-          @for(row of dataForm?.data; track $index) {
+    <div class="flex flex-col" >
+      <div class="overflow-x-auto rounded-box border
+        border-base-content/5 bg-base-100 ">
+        <table class="table ">
+          <!-- head -->
+          <thead>
             <tr>
-              @for (item of dataForm?.head; track $index) {
-                @switch (item.type) {
-                  @case('select') {
-                    <th>
-                      <input type="checkbox" checked="checked" class="checkbox checkbox-sm" />
-                    </th>
-                  }
-                  @case('text') {
-                    <td key="$index" >{{ row[item.key] }}</td>
-                  }
-                  @case('date') {
-                    <td key="$index" >{{ row[item.key] | date }}</td>
-                  }
-                  @case('actions') {
-                    <td>
-                      <div class="dropdown dropdown-bottom dropdown-end ">
-                        <div tabindex="0" role="button" class="btn btn-ghost btn-sm btn-primary">...</div>
-                        <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box
-                          z-1 w-30 p-1 gap-1 shadow-sm">
-                          <li class="border-b-1 p-2  border-neutral-content" >Actions</li>
-                          <li ><a><icon-edit/>Edit</a></li>
-                          <li ><a><icon-delete class="text-secondary" />Remove</a></li>
-                        </ul>
-                      </div>
-                    </td>
-                  }
-                  @default {
-                    <td></td>
-                  }
-                }
+              @for(perHead of dataForm?.head; track $index) {
+                <th>{{perHead.name}}</th>
               }
             </tr>
-          }
-        </tbody>
-      </table>
-
-    </div>
-    <div class="flex items-center justify-between p-5 " >
-        <span>{{ getStatusTable() }}</span>
-          <app-pagination
-          [actualPage]="actualPage"
-          [totalPages]="(totalPages)"
-          (futurePage)="sendFuturePage($event)"
-        />
+          </thead>
+          <!-- body -->
+          <tbody >
+            @for(row of dataForm?.data; track $index) {
+              <tr>
+                @for (item of dataForm?.head; track $index) {
+                  @switch (item.type) {
+                    @case('select') {
+                      <th>
+                        <input type="checkbox" checked="checked" class="checkbox checkbox-sm" />
+                      </th>
+                    }
+                    @case('text') {
+                      <td key="$index" >{{ row[item.key] }}</td>
+                    }
+                    @case('date') {
+                      <td key="$index" >{{ row[item.key] | date }}</td>
+                    }
+                    @case('actions') {
+                      <td>
+                        <div class="dropdown dropdown-bottom dropdown-end ">
+                          <div tabindex="0" role="button" class="btn btn-ghost btn-sm btn-primary">...</div>
+                          <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box
+                            z-1 w-30 p-1 gap-1 shadow-sm">
+                            <li class="border-b-1 p-2  border-neutral-content" >Actions</li>
+                            <li ><a><icon-edit/>Edit</a></li>
+                            <li ><a><icon-delete class="text-secondary" />Remove</a></li>
+                          </ul>
+                        </div>
+                      </td>
+                    }
+                    @default {
+                      <td></td>
+                    }
+                  }
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
       </div>
+      <div class="flex flex-col md:flex-row items-start md:items-center
+        md:justify-between p-5 gap-5 md:gap-0 " >
+          <span>{{ getStatusTable() }}</span>
+            <app-pagination
+            [actualPage]="actualPage"
+            [totalPages]="(totalPages)"
+            (futurePage)="sendFuturePage($event)"
+          />
+        </div>
+    </div>
   `,
   styles: ``
 })

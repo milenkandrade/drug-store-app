@@ -17,8 +17,10 @@ import { SidebarComponent } from "./components/container/sidebar/sidebar.compone
     @if (payload) {
       <div class="form-row"><strong>Saved the following values</strong><br />{{ (payload | json) }}</div>
     } -->
-  <div class="w-full h-[100dvh] max-w-360 flex justify-self-center bg-base-100 mx-auto ">
+  <div class="w-full h-full max-w-360 flex justify-self-center bg-base-100 mx-auto" >
     <app-sidebar />
+  </div>
+  <div class="w-full h-full max-w-360 flex justify-self-center justify-center bg-base-100 mx-auto">
     <router-outlet [hidden]="true" />
   </div>
   `,

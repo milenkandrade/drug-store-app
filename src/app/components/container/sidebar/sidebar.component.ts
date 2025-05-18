@@ -71,30 +71,28 @@ export class SidebarComponent implements OnInit, OnDestroy {
   destroy = new Subject<void>()
   isOpen = signal(false);
   platformService = inject(PlatformService);
-  isMobile = this.platformService.isMobile$
+  isMobile = this.platformService.isMobile$.pipe(takeUntil(this.destroy))
 
   changeIsOpen() {
     this.isOpen.set(!this.isOpen())
   }
 
   changeIsOpenAndMobile() {
-    return this.isMobile.pipe(takeUntil(this.destroy),
-      map( v => v && this.isOpen() && this.isOpen.set(false)))
+    return this.isMobile.pipe(map( v => v && this.isOpen() && this.isOpen.set(false)))
   }
 
   shouldOpenSidebar() {
-    return this.isMobile.pipe(takeUntil(this.destroy), map( v => !v && this.isOpen()))
+    return this.isMobile.pipe(map( v => !v && this.isOpen()))
   }
 
   ngOnInit(): void {
-    this.isMobile.pipe(takeUntil(this.destroy))
-      .subscribe((isMobile: boolean) => {
-        if (!isMobile) {
-          this.isOpen.set(true);
-        } else {
-          this.isOpen.set(false);
-        }
-      });
+    this.isMobile.subscribe((isMobile: boolean) => {
+      if (!isMobile) {
+        this.isOpen.set(true);
+      } else {
+        this.isOpen.set(false);
+      }
+    });
   }
 
   ngOnDestroy(): void {

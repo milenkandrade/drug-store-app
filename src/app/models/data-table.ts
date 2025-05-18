@@ -1,6 +1,6 @@
 import DataHead from "./data-head";
 
-export class DataForm<T> {
+export class DataTable<T> {
   head: DataHead[];
   data: T[];
 

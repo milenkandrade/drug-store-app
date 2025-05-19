@@ -71,7 +71,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     { id: 2, name: 'Entries', image: DocumentComponent, link: '/entries' },
     { id: 3, name: 'Inventory', image: PackageComponent, link: '/inventory/1' },
     { id: 4, name: 'Sales', image: ChartComponent, link: '/sales' },
-    { id: 5, name: 'Alerts', image: AlertComponent, link: '/alerts' },
+    { id: 5, name: 'Alerts', image: AlertComponent, link: '/alerts/1' },
   ]
   destroy = new Subject<void>()
   isOpen = signal(false);

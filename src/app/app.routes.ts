@@ -11,13 +11,16 @@ export const routes: Routes = [
     path: '', redirectTo: '/inventory/1', pathMatch: 'full'
   },
   {
+    path: '', redirectTo: '/alerts/1', pathMatch: 'full'
+  },
+  {
     path:'dashboard', component: DashboardPageComponent
   },
   {
     path:'entries', component: EntriesPageComponent
   },
   {
-    path:'alerts', component: AlertsPageComponent
+    path:'alerts/:id', component: AlertsPageComponent
   },
   {
     path:'inventory/:id', component: InventoryPageComponent

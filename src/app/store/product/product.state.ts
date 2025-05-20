@@ -52,9 +52,9 @@ export const ProductsReducer = createReducer(
     ({ ...state, selectedPageable: pageable })),
 
   on(loadProductsSuccess,
-    (state, { products }) => ({ ...state, products, isLoadingBrands: false })),
+    (state, { products }) => ({ ...state, products, isLoadingProducts: false })),
   on(loadProductsFailure,
-    (state, { errorAPIProducts }) => ({ ...state, errorAPIProducts, isLoadingBrands: false })),
+    (state, { errorAPIProducts }) => ({ ...state, errorAPIProducts, isLoadingProducts: false })),
 )
 
 export const productsFeature = createFeature({
